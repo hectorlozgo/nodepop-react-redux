@@ -20,6 +20,11 @@ export const Navbar = ({
   onLoginClick,
   onLogoutClick
 }: NavbarProps) => {
+  const navLinks = [
+    { name: 'Mis Anuncios', route: '/', show: isLogged, end: true },
+    { name: 'Nuevo', route: '/adverts/new', show: isLogged, end: true },
+    { name: 'Registro', route: '/signup', show: !isLogged, end: false }
+  ]
   return (
     <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
       <NavLink
@@ -31,20 +36,16 @@ export const Navbar = ({
       </NavLink>
 
       <ul className="flex flex-wrap items-center gap-4 text-base font-medium text-emerald-700 sm:gap-6 md:gap-8 md:text-lg">
-        {isLogged ? (
-          <li>
-            <NavLink to="/adverts/new" end className={getNavLinkClass}>
-              Nuevo
-            </NavLink>
-          </li>
-        ) : (
-          <li>
-            <NavLink to="/signup" className={getNavLinkClass}>
-              Registro
-            </NavLink>
-          </li>
+        {navLinks.map(
+          (link) =>
+            link.show && (
+              <li key={link.route}>
+                <NavLink to={link.route} className={getNavLinkClass}>
+                  {link.name}
+                </NavLink>
+              </li>
+            )
         )}
-
         <li>
           {isLogged ? (
             <Button
