@@ -1,5 +1,5 @@
-import { useEffect, useEffectEvent, useRef } from 'react'
 import { Button } from './button'
+import { useDialog } from '../hooks/useDialog'
 
 interface DialogConfirmProps {
   title: string
@@ -15,17 +15,7 @@ export const DialogConfirm = ({
   onClose,
   onConfirm
 }: DialogConfirmProps) => {
-  const dialogRef = useRef<HTMLDialogElement>(null)
-  const handleDialog = useEffectEvent((shouldOpen: boolean) => {
-    const dialog = dialogRef.current
-    if (!dialog) return
-    if (shouldOpen && !dialog.open) dialog.showModal()
-    if (!shouldOpen && dialog) return dialog.close()
-  })
-
-  useEffect(() => {
-    handleDialog(isOpen)
-  }, [isOpen])
+  const dialogRef = useDialog(isOpen)
 
   return (
     <dialog
