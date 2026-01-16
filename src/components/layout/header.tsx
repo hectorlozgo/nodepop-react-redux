@@ -1,7 +1,8 @@
-import { NavLink, useLocation, type NavLinkProps } from 'react-router-dom'
-import { useAppSelector } from '../../store'
-import { Button } from '../ui/button'
+import { useLocation } from 'react-router-dom'
 import { useLogout } from '../hooks/useLogout'
+import { DialogConfirm } from '../ui/modal-confirm'
+import { useAppSelector } from '../../store'
+import { Navbar } from './navbar'
 
 export const Header = () => {
   const location = useLocation()
@@ -14,90 +15,29 @@ export const Header = () => {
     handleLogoutClick
   } = useLogout()
 
-  const handleLoginClick = () => {
-    if (location.pathname !== '/login') {
-      navigate('/login')
-    }
+  const isLoginPath = location.pathname === '/login'
+  const handleLoginNavigate = () => {
+    if (!isLoginPath) navigate('/login')
   }
-
-  const getNavLinkClass: NavLinkProps['className'] = ({ isActive }) =>
-    isActive
-      ? 'border-b-2 border-emerald-700 pb-1'
-      : 'pb-1 transition hover:border-b-2 hover:border-emerald-500'
 
   return (
     <header className="w-full bg-white px-4 py-4 shadow-md sm:px-6 md:px-8">
-      <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
-        <NavLink
-          to="/"
-          className="flex cursor-pointer items-center gap-2 select-none"
-        >
-          <img src="/logo.svg" alt="Logo Nodepop" className="h-10" />
-          <span className="sr-only">Nodepop</span>
-        </NavLink>
+      <Navbar
+        isLogged={isLogged}
+        isLoginPath={isLoginPath}
+        isLoading={loadingLogout}
+        onLogoutClick={() => setLogoutConfirm(true)}
+        onLoginClick={handleLoginNavigate}
+      />
 
-        <ul className="flex flex-wrap items-center gap-4 text-base font-medium text-emerald-700 sm:gap-6 md:gap-8 md:text-lg">
-          {isLogged && (
-            <li>
-              <NavLink to="/adverts/new" end className={getNavLinkClass}>
-                Nuevo
-              </NavLink>
-            </li>
-          )}
-
-          {!isLogged && (
-            <li>
-              <NavLink to="/signup" className={getNavLinkClass}>
-                Registro
-              </NavLink>
-            </li>
-          )}
-
-          <li>
-            {isLogged ? (
-              <Button
-                variant="secondary"
-                onClick={() => setLogoutConfirm(true)}
-                disabled={loadingLogout}
-              >
-                {loadingLogout ? 'Cerrando sesión...' : 'Logout'}
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                onClick={handleLoginClick}
-                disabled={location.pathname === '/login'}
-              >
-                Login
-              </Button>
-            )}
-          </li>
-        </ul>
-      </nav>
       {logoutConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-sm">
-          <div className="mx-auto max-w-md rounded border border-gray-300 bg-gray-50 p-4 text-center shadow-md">
-            <p className="mb-4 text-lg font-semibold text-gray-700">
-              ¿Estás seguro que deseas cerrar sesión?
-            </p>
-            <div className="flex justify-center gap-4">
-              <Button
-                className="rounded-2xl bg-gray-300 p-1.5 text-gray-800 hover:bg-gray-400"
-                onClick={() => setLogoutConfirm(false)}
-                disabled={loadingLogout}
-              >
-                Cancelar
-              </Button>
-              <Button
-                className="rounded-2xl bg-red-600 p-1.5 text-white hover:bg-red-700"
-                onClick={handleLogoutClick}
-                disabled={loadingLogout}
-              >
-                {loadingLogout ? 'Cerrando...' : 'Confirmar'}
-              </Button>
-            </div>
-          </div>
-        </div>
+        <DialogConfirm
+          title="¿Estás seguro que deseas cerrar sesión?"
+          isOpen={logoutConfirm}
+          isLoading={loadingLogout}
+          onClose={() => setLogoutConfirm(false)}
+          onConfirm={handleLogoutClick}
+        />
       )}
     </header>
   )

@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { logout } from '../../pages/auth/service'
 import { authLogout } from '../../store/auth/actions'
-import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../store'
 
 export const useLogout = () => {
