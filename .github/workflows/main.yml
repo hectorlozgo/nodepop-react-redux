@@ -47,4 +47,3 @@ jobs:
       # 6. Ejecuta build para asegurarse que compila
       - name: Build
         run: npm run build
-

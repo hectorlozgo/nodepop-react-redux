@@ -45,9 +45,6 @@ export const Navbar = ({
           </li>
         )}
 
-        {/* {!isLogged && (
-        )} */}
-
         <li>
           {isLogged ? (
             <Button
