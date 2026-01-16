@@ -1,19 +1,18 @@
 // NotificationsContext.tsx
-import { createContext, type ReactNode } from "react";
-import { useMessages } from "../hooks/useMessage";
-import { Notifications } from "./notification";
+import { createContext, type ReactNode } from 'react'
+import { useMessages } from '../hooks/useMessage'
+import { Notifications } from './notification'
 
 type NotificationsContextType = {
-  showSuccess: (msg: string) => void;
-  showError: (msg: string) => void;
-};
+  showSuccess: (msg: string) => void
+  showError: (msg: string) => void
+}
 
 export const NotificationsContext =
-  createContext<NotificationsContextType | null>(null);
+  createContext<NotificationsContextType | null>(null)
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
-  const { successMessage, errorMessage, showSuccess, showError } =
-    useMessages();
+  const { successMessage, errorMessage, showSuccess, showError } = useMessages()
 
   return (
     <NotificationsContext.Provider value={{ showSuccess, showError }}>
@@ -26,5 +25,5 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
       </div>
       {children}
     </NotificationsContext.Provider>
-  );
+  )
 }

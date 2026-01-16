@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const AdvertPayloadSchema = z.object({
   name: z.string(),
@@ -13,6 +13,6 @@ export type AdvertPayload = z.infer<typeof AdvertPayloadSchema>
 export const AdvertSchema = AdvertPayloadSchema.extend({
   id: z.string(),
   createdAt: z.string()
-});
+})
 
-export type Advert = z.infer<typeof AdvertSchema>;
+export type Advert = z.infer<typeof AdvertSchema>

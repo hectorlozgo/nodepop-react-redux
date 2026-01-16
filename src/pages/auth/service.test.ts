@@ -1,53 +1,60 @@
-import { login, logout } from "./service";
-import { apiClient, removeAuthorizationHeader, setAuthorizationHeader } from "../../api/client";
-import { storage } from "../../utils/storage";
-import { USER_ENDPOINTS } from "../../utils/endpoints";
-import type { CredentialUser, Jwt } from "./types-auth";
+import { login, logout } from './service'
+import {
+  apiClient,
+  removeAuthorizationHeader,
+  setAuthorizationHeader
+} from '../../api/client'
+import { storage } from '../../utils/storage'
+import { USER_ENDPOINTS } from '../../utils/endpoints'
+import type { CredentialUser, Jwt } from './types-auth'
 
-vi.mock("../../api/client", () => ({
+vi.mock('../../api/client', () => ({
   apiClient: {
-    post: vi.fn(),
+    post: vi.fn()
   },
   setAuthorizationHeader: vi.fn(),
-  removeAuthorizationHeader: vi.fn(),
-}));
+  removeAuthorizationHeader: vi.fn()
+}))
 
-vi.mock("../../utils/storage", () => ({
+vi.mock('../../utils/storage', () => ({
   storage: {
     set: vi.fn(),
-    remove: vi.fn(),
-  },
-}));
+    remove: vi.fn()
+  }
+}))
 
-describe("Auth Service", () => {
+describe('Auth Service', () => {
   const mockCredentials: CredentialUser = {
-    email: "user@example.com",
-    password: "password123",
-  };
+    email: 'user@example.com',
+    password: 'password123'
+  }
 
   const mockToken: Jwt = {
-    accessToken: "fake.jwt.token",
-  };
+    accessToken: 'fake.jwt.token'
+  }
 
   beforeEach(() => {
-    vi.clearAllMocks();
-  });
+    vi.clearAllMocks()
+  })
 
-  test("login() should call apiClient.post, set header, store token and return it", async () => {
-    (apiClient.post as any).mockResolvedValueOnce({ data: mockToken });
+  test('login() should call apiClient.post, set header, store token and return it', async () => {
+    ;(apiClient.post as any).mockResolvedValueOnce({ data: mockToken })
 
-    const token = await login(mockCredentials);
+    const token = await login(mockCredentials)
 
-    expect(apiClient.post).toHaveBeenCalledWith(USER_ENDPOINTS.LOGIN, mockCredentials);
-    expect(setAuthorizationHeader).toHaveBeenCalledWith(mockToken.accessToken);
-    expect(storage.set).toHaveBeenCalledWith("auth", mockToken.accessToken);
-    expect(token).toBe(mockToken.accessToken);
-  });
+    expect(apiClient.post).toHaveBeenCalledWith(
+      USER_ENDPOINTS.LOGIN,
+      mockCredentials
+    )
+    expect(setAuthorizationHeader).toHaveBeenCalledWith(mockToken.accessToken)
+    expect(storage.set).toHaveBeenCalledWith('auth', mockToken.accessToken)
+    expect(token).toBe(mockToken.accessToken)
+  })
 
-  test("logout() should remove token and clear header", async () => {
-    await logout();
+  test('logout() should remove token and clear header', async () => {
+    await logout()
 
-    expect(storage.remove).toHaveBeenCalledWith("auth");
-    expect(removeAuthorizationHeader).toHaveBeenCalled();
-  });
-});
+    expect(storage.remove).toHaveBeenCalledWith('auth')
+    expect(removeAuthorizationHeader).toHaveBeenCalled()
+  })
+})

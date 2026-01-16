@@ -1,13 +1,13 @@
-import { Button } from "../../components/ui/button";
-import { Link } from "react-router-dom";
-import { SpinnerLoadingText } from "../../components/icons/spinner";
-import { Input } from "../../components/ui/formFields";
-import { Form } from "../../components/ui/form";
-import { useLoginForm } from "../../components/hooks/useLoginForm";
+import { Button } from '../../components/ui/button'
+import { Link } from 'react-router-dom'
+import { SpinnerLoadingText } from '../../components/icons/spinner'
+import { Input } from '../../components/ui/formFields'
+import { Form } from '../../components/ui/form'
+import { useLoginForm } from '../../components/hooks/useLoginForm'
 
 export const LoginPage = () => {
   const { credentials, isLoading, isLoginValid, handleChange, handleSubmit } =
-    useLoginForm();
+    useLoginForm()
 
   return (
     <div className="mx-auto max-w-sm rounded-2xl bg-white p-8 shadow-lg">
@@ -21,7 +21,7 @@ export const LoginPage = () => {
         initialValue={{
           email: credentials.email,
           password: credentials.password,
-          remember: credentials.remember ?? false,
+          remember: credentials.remember ?? false
         }}
       >
         <Input
@@ -73,7 +73,7 @@ export const LoginPage = () => {
           {isLoading ? (
             <SpinnerLoadingText text="Iniciando sesión..." />
           ) : (
-            "Iniciar sesión"
+            'Iniciar sesión'
           )}
         </Button>
       </Form>
@@ -85,5 +85,5 @@ export const LoginPage = () => {
         </Link>
       </p>
     </div>
-  );
-};
+  )
+}

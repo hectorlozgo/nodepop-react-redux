@@ -1,48 +1,48 @@
-import { useEffect, useState } from "react";
-import { Button } from "../../components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { Button } from '../../components/ui/button'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   FilterClosedIcon,
-  FilterOpenIcon,
-} from "../../components/icons/filters";
-import { Input } from "../../components/ui/formFields";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { authLogout } from "../../store/auth/actions";
-import { Page } from "../../components/layout/page";
-import { Form } from "../../components/ui/form";
-import { advertsLoaded } from "../../store/adverts/actions";
-import { getAdverts } from "../../store/adverts/selectors";
+  FilterOpenIcon
+} from '../../components/icons/filters'
+import { Input } from '../../components/ui/formFields'
+import { useAppDispatch, useAppSelector } from '../../store'
+import { authLogout } from '../../store/auth/actions'
+import { Page } from '../../components/layout/page'
+import { Form } from '../../components/ui/form'
+import { advertsLoaded } from '../../store/adverts/actions'
+import { getAdverts } from '../../store/adverts/selectors'
 
 const EmptyAdverts = () => {
   return (
     <div className="empty-adverts-page">
       <p>Ningún anuncio que mostrar.</p>
-      <Link to={"/adverts/new"}>
+      <Link to={'/adverts/new'}>
         <Button variant="primary" type="button">
           Crear anuncio
         </Button>
       </Link>
     </div>
-  );
-};
+  )
+}
 
 export const AdvertsPage = () => {
-  const [nameFilter, setNameFilter] = useState("");
-  const [tagFilter, setTagFilter] = useState<string[]>([]);
-  const [priceMin, setPriceMin] = useState("");
-  const [priceMax, setPriceMax] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
-  const [typeSaleFilter, setTypeSaleFilter] = useState("");
-  const isLogged = useAppSelector((state) => state.auth);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const adverts = useAppSelector(getAdverts);
+  const [nameFilter, setNameFilter] = useState('')
+  const [tagFilter, setTagFilter] = useState<string[]>([])
+  const [priceMin, setPriceMin] = useState('')
+  const [priceMax, setPriceMax] = useState('')
+  const [showFilters, setShowFilters] = useState(false)
+  const [typeSaleFilter, setTypeSaleFilter] = useState('')
+  const isLogged = useAppSelector((state) => state.auth)
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const adverts = useAppSelector(getAdverts)
 
   useEffect(() => {
     if (!isLogged) {
-      dispatch(authLogout());
-      navigate("/login", { replace: true });
-      return;
+      dispatch(authLogout())
+      navigate('/login', { replace: true })
+      return
     }
     dispatch(advertsLoaded())
   }, [isLogged, dispatch, navigate])
@@ -50,21 +50,21 @@ export const AdvertsPage = () => {
   const filteredAdverts = adverts.filter((advert) => {
     const matchesName = advert.name
       .toLowerCase()
-      .includes(nameFilter.toLowerCase());
+      .includes(nameFilter.toLowerCase())
 
     const matchesType =
-      typeSaleFilter === "" ||
-      (typeSaleFilter === "sell" && advert.sale === false) ||
-      (typeSaleFilter === "buy" && advert.sale === true);
+      typeSaleFilter === '' ||
+      (typeSaleFilter === 'sell' && advert.sale === false) ||
+      (typeSaleFilter === 'buy' && advert.sale === true)
 
     const matchesMinPrice =
-      priceMin === "" || advert.price >= parseFloat(priceMin);
+      priceMin === '' || advert.price >= parseFloat(priceMin)
     const matchesMaxPrice =
-      priceMax === "" || advert.price <= parseFloat(priceMax);
+      priceMax === '' || advert.price <= parseFloat(priceMax)
 
     const matchesTags =
       tagFilter.length === 0 ||
-      tagFilter.every((tag) => advert.tags.includes(tag));
+      tagFilter.every((tag) => advert.tags.includes(tag))
 
     return (
       matchesName &&
@@ -72,16 +72,16 @@ export const AdvertsPage = () => {
       matchesMinPrice &&
       matchesMaxPrice &&
       matchesTags
-    );
-  });
+    )
+  })
 
   const uniqueTags = [
-    ...new Set(adverts.flatMap((filterAdvert) => filterAdvert.tags)),
-  ];
+    ...new Set(adverts.flatMap((filterAdvert) => filterAdvert.tags))
+  ]
 
   return (
     <main>
-      <Page title={"Bienvenido a Nodepop"}>
+      <Page title={'Bienvenido a Nodepop'}>
         <p className="py-1 text-center text-sm text-gray-600">
           Página de anuncios
         </p>
@@ -89,7 +89,7 @@ export const AdvertsPage = () => {
           <Button
             onClick={() => setShowFilters((prev) => !prev)}
             className="inline-flex items-center justify-center rounded-lg bg-emerald-600 p-2 text-white shadow transition hover:bg-emerald-700"
-            title={showFilters ? "Ocultar filtros" : "Mostrar filtros"}
+            title={showFilters ? 'Ocultar filtros' : 'Mostrar filtros'}
           >
             {showFilters ? <FilterOpenIcon /> : <FilterClosedIcon />}
           </Button>
@@ -98,7 +98,7 @@ export const AdvertsPage = () => {
         {showFilters && (
           <Form
             onSubmit={(event) => {
-              event.preventDefault();
+              event.preventDefault()
             }}
             className="animate-fadeIn mb-8 rounded-xl bg-gray-100 p-4 shadow-inner"
           >
@@ -169,7 +169,7 @@ export const AdvertsPage = () => {
                   {uniqueTags.map((tag) => (
                     <label
                       key={tag}
-                      className={"inline-flex items-center space-x-2"}
+                      className={'inline-flex items-center space-x-2'}
                     >
                       <Input
                         id={`tag-${tag}`}
@@ -179,9 +179,9 @@ export const AdvertsPage = () => {
                         checked={tagFilter.includes(tag)}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            setTagFilter([...tagFilter, tag]);
+                            setTagFilter([...tagFilter, tag])
                           } else {
-                            setTagFilter(tagFilter.filter((t) => t !== tag));
+                            setTagFilter(tagFilter.filter((t) => t !== tag))
                           }
                         }}
                         className="accent-emerald-600"
@@ -214,13 +214,13 @@ export const AdvertsPage = () => {
                   </Link>
                   <Link to={`/adverts/${advert.id}`}>
                     <img
-                      src={advert.photo || "/no-fotos.png"}
-                      alt={advert.name || "Sin imagen"}
+                      src={advert.photo || '/no-fotos.png'}
+                      alt={advert.name || 'Sin imagen'}
                       className="mb-4 h-48 w-full rounded-lg object-contain"
                     />
                   </Link>
                   <p className="py-1 text-center text-sm text-gray-600">
-                    {advert.tags.join(", ")}
+                    {advert.tags.join(', ')}
                   </p>
                   <p className="text-center font-bold text-emerald-900">
                     {advert.price} €
@@ -228,11 +228,11 @@ export const AdvertsPage = () => {
                   <span
                     className={`mx-auto inline-flex items-center justify-center rounded-full px-6 py-1 text-xs font-medium shadow-lg ${
                       advert.sale
-                        ? "bg-emerald-200 text-emerald-800"
-                        : "bg-blue-200 text-blue-800"
+                        ? 'bg-emerald-200 text-emerald-800'
+                        : 'bg-blue-200 text-blue-800'
                     }`}
                   >
-                    {advert.sale ? "Compra" : "Venta"}
+                    {advert.sale ? 'Compra' : 'Venta'}
                   </span>
                 </div>
               </li>
@@ -243,5 +243,5 @@ export const AdvertsPage = () => {
         )}
       </Page>
     </main>
-  );
-};
+  )
+}

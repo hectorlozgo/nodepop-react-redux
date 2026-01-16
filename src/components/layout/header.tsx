@@ -1,46 +1,46 @@
-import { useState } from "react";
+import { useState } from 'react'
 import {
   NavLink,
   useNavigate,
   useLocation,
-  type NavLinkProps,
-} from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { Button } from "../ui/button";
-import { logout } from "../../pages/auth/service";
-import { authLogout } from "../../store/auth/actions";
+  type NavLinkProps
+} from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../store'
+import { Button } from '../ui/button'
+import { logout } from '../../pages/auth/service'
+import { authLogout } from '../../store/auth/actions'
 
 export const Header = () => {
-  const isLogged = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
+  const isLogged = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [loadingLogout, setLoadingLogout] = useState(false);
-  const [logoutConfirm, setLogoutConfirm] = useState(false);
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [loadingLogout, setLoadingLogout] = useState(false)
+  const [logoutConfirm, setLogoutConfirm] = useState(false)
 
   const handleLoginClick = () => {
-    if (location.pathname !== "/login") {
-      navigate("/login");
+    if (location.pathname !== '/login') {
+      navigate('/login')
     }
-  };
+  }
 
   const handleLogoutClick = async () => {
     try {
-      setLoadingLogout(true);
-      await logout();
-      dispatch(authLogout());
-      navigate("/");
+      setLoadingLogout(true)
+      await logout()
+      dispatch(authLogout())
+      navigate('/')
     } finally {
-      setLoadingLogout(false);
-      setLogoutConfirm(false);
+      setLoadingLogout(false)
+      setLogoutConfirm(false)
     }
-  };
+  }
 
-  const getNavLinkClass: NavLinkProps["className"] = ({ isActive }) =>
+  const getNavLinkClass: NavLinkProps['className'] = ({ isActive }) =>
     isActive
-      ? "border-b-2 border-emerald-700 pb-1"
-      : "pb-1 transition hover:border-b-2 hover:border-emerald-500";
+      ? 'border-b-2 border-emerald-700 pb-1'
+      : 'pb-1 transition hover:border-b-2 hover:border-emerald-500'
 
   return (
     <header className="w-full bg-white px-4 py-4 shadow-md sm:px-6 md:px-8">
@@ -77,13 +77,13 @@ export const Header = () => {
                 onClick={() => setLogoutConfirm(true)}
                 disabled={loadingLogout}
               >
-                {loadingLogout ? "Cerrando sesión..." : "Logout"}
+                {loadingLogout ? 'Cerrando sesión...' : 'Logout'}
               </Button>
             ) : (
               <Button
                 variant="primary"
                 onClick={handleLoginClick}
-                disabled={location.pathname === "/login"}
+                disabled={location.pathname === '/login'}
               >
                 Login
               </Button>
@@ -110,12 +110,12 @@ export const Header = () => {
                 onClick={handleLogoutClick}
                 disabled={loadingLogout}
               >
-                {loadingLogout ? "Cerrando..." : "Confirmar"}
+                {loadingLogout ? 'Cerrando...' : 'Confirmar'}
               </Button>
             </div>
           </div>
         </div>
       )}
     </header>
-  );
-};
+  )
+}

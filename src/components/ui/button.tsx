@@ -1,7 +1,7 @@
-import clsx from "clsx";
+import clsx from 'clsx'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
+  variant?: 'primary' | 'secondary'
 }
 
 export const Button = ({
@@ -15,8 +15,8 @@ export const Button = ({
   return (
     <button
       className={clsx(`btn-${variant}`, className, {
-        "cursor-not-allowed opacity-50": disabled,
-        "cursor-pointer": !disabled,
+        'cursor-not-allowed opacity-50': disabled,
+        'cursor-pointer': !disabled
       })}
       disabled={disabled}
       onClick={onClick}
@@ -24,5 +24,5 @@ export const Button = ({
     >
       {children}
     </button>
-  );
-};
+  )
+}

@@ -1,3 +1,3 @@
-import type { RootState } from "..";
+import type { RootState } from '..'
 
-export const getIsLogged = (state: RootState) => state.auth;
+export const getIsLogged = (state: RootState) => state.auth

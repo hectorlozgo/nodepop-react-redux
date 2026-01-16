@@ -1,20 +1,20 @@
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { AuthRoute } from "./require-auth";
-import * as reduxHooks from "../../store"; // importamos el hook para mockearlo
+import { render, screen } from '@testing-library/react'
+import { MemoryRouter, Routes, Route } from 'react-router-dom'
+import { AuthRoute } from './require-auth'
+import * as reduxHooks from '../../store' // importamos el hook para mockearlo
 
-describe("AuthRoute component", () => {
-  const ChildComponent = () => <div>Contenido protegido</div>;
+describe('AuthRoute component', () => {
+  const ChildComponent = () => <div>Contenido protegido</div>
 
   beforeEach(() => {
-    vi.restoreAllMocks();
-  });
+    vi.restoreAllMocks()
+  })
 
-  test("muestra los hijos cuando requireAuth=true y usuario está logueado", () => {
-    vi.spyOn(reduxHooks, "useAppSelector").mockReturnValue(true);
+  test('muestra los hijos cuando requireAuth=true y usuario está logueado', () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue(true)
 
     render(
-      <MemoryRouter initialEntries={["/private"]}>
+      <MemoryRouter initialEntries={['/private']}>
         <Routes>
           <Route
             path="/private"
@@ -26,16 +26,16 @@ describe("AuthRoute component", () => {
           />
         </Routes>
       </MemoryRouter>
-    );
+    )
 
-    expect(screen.getByText("Contenido protegido")).toBeInTheDocument();
-  });
+    expect(screen.getByText('Contenido protegido')).toBeInTheDocument()
+  })
 
-  test("redirige a /login cuando requireAuth=true y usuario NO está logueado", () => {
-    vi.spyOn(reduxHooks, "useAppSelector").mockReturnValue(false);
+  test('redirige a /login cuando requireAuth=true y usuario NO está logueado', () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue(false)
 
     render(
-      <MemoryRouter initialEntries={["/private"]}>
+      <MemoryRouter initialEntries={['/private']}>
         <Routes>
           <Route path="/login" element={<div>Página Login</div>} />
           <Route
@@ -48,18 +48,21 @@ describe("AuthRoute component", () => {
           />
         </Routes>
       </MemoryRouter>
-    );
+    )
 
-    expect(screen.getByText("Página Login")).toBeInTheDocument();
-  });
+    expect(screen.getByText('Página Login')).toBeInTheDocument()
+  })
 
-  test("redirige a redirectTo personalizado si está definido y usuario no está logueado", () => {
-    vi.spyOn(reduxHooks, "useAppSelector").mockReturnValue(false);
+  test('redirige a redirectTo personalizado si está definido y usuario no está logueado', () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue(false)
 
     render(
-      <MemoryRouter initialEntries={["/private"]}>
+      <MemoryRouter initialEntries={['/private']}>
         <Routes>
-          <Route path="/custom-redirect" element={<div>Redirect Personalizado</div>} />
+          <Route
+            path="/custom-redirect"
+            element={<div>Redirect Personalizado</div>}
+          />
           <Route
             path="/private"
             element={
@@ -70,16 +73,16 @@ describe("AuthRoute component", () => {
           />
         </Routes>
       </MemoryRouter>
-    );
+    )
 
-    expect(screen.getByText("Redirect Personalizado")).toBeInTheDocument();
-  });
+    expect(screen.getByText('Redirect Personalizado')).toBeInTheDocument()
+  })
 
-  test("muestra los hijos cuando requireAuth=false y usuario NO está logueado", () => {
-    vi.spyOn(reduxHooks, "useAppSelector").mockReturnValue(false);
+  test('muestra los hijos cuando requireAuth=false y usuario NO está logueado', () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue(false)
 
     render(
-      <MemoryRouter initialEntries={["/signup"]}>
+      <MemoryRouter initialEntries={['/signup']}>
         <Routes>
           <Route
             path="/signup"
@@ -91,16 +94,16 @@ describe("AuthRoute component", () => {
           />
         </Routes>
       </MemoryRouter>
-    );
+    )
 
-    expect(screen.getByText("Contenido protegido")).toBeInTheDocument();
-  });
+    expect(screen.getByText('Contenido protegido')).toBeInTheDocument()
+  })
 
-  test("redirige a /adverts cuando requireAuth=false y usuario está logueado", () => {
-    vi.spyOn(reduxHooks, "useAppSelector").mockReturnValue(true);
+  test('redirige a /adverts cuando requireAuth=false y usuario está logueado', () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue(true)
 
     render(
-      <MemoryRouter initialEntries={["/signup"]}>
+      <MemoryRouter initialEntries={['/signup']}>
         <Routes>
           <Route path="/adverts" element={<div>Página Adverts</div>} />
           <Route
@@ -113,18 +116,21 @@ describe("AuthRoute component", () => {
           />
         </Routes>
       </MemoryRouter>
-    );
+    )
 
-    expect(screen.getByText("Página Adverts")).toBeInTheDocument();
-  });
+    expect(screen.getByText('Página Adverts')).toBeInTheDocument()
+  })
 
-  test("redirige a redirectTo personalizado cuando requireAuth=false y usuario está logueado", () => {
-    vi.spyOn(reduxHooks, "useAppSelector").mockReturnValue(true);
+  test('redirige a redirectTo personalizado cuando requireAuth=false y usuario está logueado', () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue(true)
 
     render(
-      <MemoryRouter initialEntries={["/signup"]}>
+      <MemoryRouter initialEntries={['/signup']}>
         <Routes>
-          <Route path="/custom-redirect" element={<div>Redirect Personalizado</div>} />
+          <Route
+            path="/custom-redirect"
+            element={<div>Redirect Personalizado</div>}
+          />
           <Route
             path="/signup"
             element={
@@ -135,8 +141,8 @@ describe("AuthRoute component", () => {
           />
         </Routes>
       </MemoryRouter>
-    );
+    )
 
-    expect(screen.getByText("Redirect Personalizado")).toBeInTheDocument();
-  });
-});
+    expect(screen.getByText('Redirect Personalizado')).toBeInTheDocument()
+  })
+})

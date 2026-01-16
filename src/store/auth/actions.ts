@@ -1,59 +1,59 @@
-import type { AppThunk } from "..";
-import { login } from "../../pages/auth/service";
-import type { CredentialUser } from "../../pages/auth/types-auth";
+import type { AppThunk } from '..'
+import { login } from '../../pages/auth/service'
+import type { CredentialUser } from '../../pages/auth/types-auth'
 
 // Tipos de Acciones
 type AuthLoginPending = {
-  type: "auth/login/pending";
-};
+  type: 'auth/login/pending'
+}
 type AuthLoginFulfilled = {
-  type: "auth/login/fulfilled";
-  payload: string;
-};
+  type: 'auth/login/fulfilled'
+  payload: string
+}
 type AuthLoginRejected = {
-  type: "auth/login/rejected";
-  payload: Error;
-};
+  type: 'auth/login/rejected'
+  payload: Error
+}
 type AuthLogout = {
-  type: "auth/logout";
-};
+  type: 'auth/logout'
+}
 
 export const AuthLoginPending = (): AuthLoginPending => ({
-  type: "auth/login/pending",
-});
+  type: 'auth/login/pending'
+})
 export const AuthLoginFulfilled = (token: string): AuthLoginFulfilled => ({
-  type: "auth/login/fulfilled",
-  payload: token,
-});
+  type: 'auth/login/fulfilled',
+  payload: token
+})
 export const AuthLoginRejected = (error: Error): AuthLoginRejected => ({
-  type: "auth/login/rejected",
-  payload: error,
-});
+  type: 'auth/login/rejected',
+  payload: error
+})
 
 export const authLogin = (
-  credentials: CredentialUser,
+  credentials: CredentialUser
 ): AppThunk<Promise<string>> => {
   return async (dispatch) => {
-    dispatch(AuthLoginPending());
+    dispatch(AuthLoginPending())
     try {
-      const token = await login(credentials);
-      dispatch(AuthLoginFulfilled(token));
-      return token;
+      const token = await login(credentials)
+      dispatch(AuthLoginFulfilled(token))
+      return token
     } catch (error) {
       if (error instanceof Error) {
-        dispatch(AuthLoginRejected(error));
+        dispatch(AuthLoginRejected(error))
       }
-      throw error;
+      throw error
     }
-  };
-};
+  }
+}
 
 export const authLogout = (): AuthLogout => ({
-  type: "auth/logout",
-});
+  type: 'auth/logout'
+})
 
 export type AuthActions =
   | AuthLoginPending
   | AuthLoginFulfilled
   | AuthLoginRejected
-  | AuthLogout;
+  | AuthLogout

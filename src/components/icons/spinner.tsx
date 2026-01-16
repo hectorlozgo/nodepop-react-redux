@@ -1,18 +1,16 @@
-
-
 interface SpinnerProps {
   text?: string
   className?: string
 }
 
 export const SpinnerLoadingText = ({
-  text = "Cargando...",
-  className = ""
-}:SpinnerProps) => {
+  text = 'Cargando...',
+  className = ''
+}: SpinnerProps) => {
   return (
     <span className={`flex items-center justify-center ${className}`}>
       <svg
-        className={"mr-2 -ml-1 h-4 w-4 animate-spin"}
+        className={'mr-2 -ml-1 h-4 w-4 animate-spin'}
         fill="none"
         viewBox="0 0 24 24"
       >
@@ -32,5 +30,5 @@ export const SpinnerLoadingText = ({
       </svg>
       {text}
     </span>
-  );
+  )
 }

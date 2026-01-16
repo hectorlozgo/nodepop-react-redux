@@ -1,84 +1,84 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
-import { Button } from "../../components/ui/button";
-import type { AdvertPayload } from "./type-advert";
-import { useNavigate } from "react-router-dom";
-import { Input } from "../../components/ui/formFields";
-import { Page } from "../../components/layout/page";
-import { Form } from "../../components/ui/form";
-import { useAppDispatch, useAppSelector, type RootState } from "../../store";
-import { advertsCreated, advertsTagsLoaded } from "../../store/adverts/actions";
-import { useNotifications } from "../../components/hooks/useNotifications";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
+import { Button } from '../../components/ui/button'
+import type { AdvertPayload } from './type-advert'
+import { useNavigate } from 'react-router-dom'
+import { Input } from '../../components/ui/formFields'
+import { Page } from '../../components/layout/page'
+import { Form } from '../../components/ui/form'
+import { useAppDispatch, useAppSelector, type RootState } from '../../store'
+import { advertsCreated, advertsTagsLoaded } from '../../store/adverts/actions'
+import { useNotifications } from '../../components/hooks/useNotifications'
 
 export const NewAdvertPage = () => {
   const [formData, setFormData] = useState<AdvertPayload>({
-    name: "",
+    name: '',
     price: 0,
     tags: [],
     sale: true,
-    photo: "",
-  });
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const { showSuccess, showError } = useNotifications();
-  const tags = useAppSelector((state: RootState) => state.adverts.tags);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+    photo: ''
+  })
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const { showSuccess, showError } = useNotifications()
+  const tags = useAppSelector((state: RootState) => state.adverts.tags)
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(advertsTagsLoaded());
-  }, [dispatch]);
+    dispatch(advertsTagsLoaded())
+  }, [dispatch])
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
-    );
-  };
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    )
+  }
 
   const isFormValid =
-    formData.name.trim() !== "" &&
+    formData.name.trim() !== '' &&
     formData.price > 0 &&
     selectedTags.length > 0 &&
-    typeof formData.sale === "boolean";
+    typeof formData.sale === 'boolean'
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
-      const formDataToSend = new FormData(event.currentTarget);
-      const newAdvert = await dispatch(advertsCreated(formDataToSend));
+      const formDataToSend = new FormData(event.currentTarget)
+      const newAdvert = await dispatch(advertsCreated(formDataToSend))
 
-      showSuccess("¡Anuncio creado con éxito!");
+      showSuccess('¡Anuncio creado con éxito!')
 
-      navigate(`/adverts/${newAdvert.id}`, { replace: true });
+      navigate(`/adverts/${newAdvert.id}`, { replace: true })
     } catch (error) {
-      console.error("Something has gone wrong", error);
-      showError("Ooops, algo ha salido mal...");
+      console.error('Something has gone wrong', error)
+      showError('Ooops, algo ha salido mal...')
     }
-  };
+  }
 
   const handleChange = ({
-    target: { name, value, type, files },
+    target: { name, value, type, files }
   }: ChangeEvent<HTMLInputElement>) => {
-    if (type === "file" && files) {
-      setPhotoFile(files[0]);
-      setPhotoPreview(URL.createObjectURL(files[0]));
-    } else if (name === "price") {
-      const parsedPrice = parseFloat(value);
+    if (type === 'file' && files) {
+      setPhotoFile(files[0])
+      setPhotoPreview(URL.createObjectURL(files[0]))
+    } else if (name === 'price') {
+      const parsedPrice = parseFloat(value)
       setFormData((prev) => ({
         ...prev,
-        price: isNaN(parsedPrice) ? 0 : parsedPrice,
-      }));
-    } else if (name === "sale") {
-      setFormData((prev) => ({ ...prev, sale: value === "true" }));
+        price: isNaN(parsedPrice) ? 0 : parsedPrice
+      }))
+    } else if (name === 'sale') {
+      setFormData((prev) => ({ ...prev, sale: value === 'true' }))
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }))
     }
-  };
+  }
 
   return (
     <main className="mx-auto max-w-lg rounded-2xl bg-white p-8 shadow-lg">
-      <Page title={"Crear Anuncio"}>
+      <Page title={'Crear Anuncio'}>
         <Form
           onSubmit={handleSubmit}
           className="space-y-5"
@@ -232,5 +232,5 @@ export const NewAdvertPage = () => {
         </Form>
       </Page>
     </main>
-  );
-};
+  )
+}

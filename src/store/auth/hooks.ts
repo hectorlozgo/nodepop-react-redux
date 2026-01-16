@@ -1,20 +1,20 @@
-import { useAppDispatch, useAppSelector } from "..";
-import type { CredentialUser } from "../../pages/auth/types-auth";
-import { authLogin, authLogout } from "./actions";
-import { getIsLogged } from "./selectors";
+import { useAppDispatch, useAppSelector } from '..'
+import type { CredentialUser } from '../../pages/auth/types-auth'
+import { authLogin, authLogout } from './actions'
+import { getIsLogged } from './selectors'
 
 export const useAuth = () => {
-  return useAppSelector(getIsLogged);
-};
+  return useAppSelector(getIsLogged)
+}
 
 export const useLoginAction = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   return async (credentials: CredentialUser) => {
-    return dispatch(authLogin(credentials));
-  };
-};
+    return dispatch(authLogin(credentials))
+  }
+}
 
 export const useLogoutAction = () => {
-  const dispatch = useAppDispatch();
-  return () => dispatch(authLogout());
-};
+  const dispatch = useAppDispatch()
+  return () => dispatch(authLogout())
+}

@@ -47,5 +47,3 @@ jobs:
       # 6. Ejecuta las pruebas con Vitest
       - name: Run tests
         run: npm run test
-
-        

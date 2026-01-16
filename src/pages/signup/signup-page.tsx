@@ -1,17 +1,23 @@
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/formFields";
-import { Form } from "../../components/ui/form";
-import { Page } from "../../components/layout/page";
-import { useSignUp } from "../../components/hooks/useSignUp";
-import { SpinnerLoadingText } from "../../components/icons/spinner";
+import { Button } from '../../components/ui/button'
+import { Input } from '../../components/ui/formFields'
+import { Form } from '../../components/ui/form'
+import { Page } from '../../components/layout/page'
+import { useSignUp } from '../../components/hooks/useSignUp'
+import { SpinnerLoadingText } from '../../components/icons/spinner'
 
 export const SignUpPage = () => {
-  const { formData, isFormValid, isLoading, handleChange, handleSubmit, handleBlur } =
-    useSignUp();
-    
+  const {
+    formData,
+    isFormValid,
+    isLoading,
+    handleChange,
+    handleSubmit,
+    handleBlur
+  } = useSignUp()
+
   return (
     <div className="mx-auto max-w-sm rounded-2xl bg-white p-8 shadow-lg">
-      <Page title={"Registro"}>
+      <Page title={'Registro'}>
         <Form onSubmit={handleSubmit} className="space-y-5">
           <Input
             label="Nombre"
@@ -87,10 +93,13 @@ export const SignUpPage = () => {
           />
           <Button type="submit" variant="primary" disabled={!isFormValid}>
             {isLoading ? (
-              <SpinnerLoadingText text="Procesando..." />) : ("Registrarse")}
+              <SpinnerLoadingText text="Procesando..." />
+            ) : (
+              'Registrarse'
+            )}
           </Button>
         </Form>
       </Page>
     </div>
-  );
-};
+  )
+}

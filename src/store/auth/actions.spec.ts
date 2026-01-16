@@ -1,14 +1,20 @@
-import { authLogin, authLogout, AuthLoginPending, AuthLoginFulfilled, AuthLoginRejected } from "./actions";
-import type { CredentialUser } from "../../pages/auth/types-auth";
-import type { RootState } from "..";
-import * as authService from "../../pages/auth/service";
+import {
+  authLogin,
+  authLogout,
+  AuthLoginPending,
+  AuthLoginFulfilled,
+  AuthLoginRejected
+} from './actions'
+import type { CredentialUser } from '../../pages/auth/types-auth'
+import type { RootState } from '..'
+import * as authService from '../../pages/auth/service'
 
-let dispatch: ReturnType<typeof vi.fn>;
-let fakeState: RootState;
+let dispatch: ReturnType<typeof vi.fn>
+let fakeState: RootState
 
-describe("Auth actions", () => {
+describe('Auth actions', () => {
   beforeEach(() => {
-    dispatch = vi.fn();
+    dispatch = vi.fn()
     fakeState = {
       auth: false,
       adverts: {
@@ -16,40 +22,48 @@ describe("Auth actions", () => {
         tags: [],
         loading: false,
         error: null,
-        selectedAdvert: null,
-      },
-    };
-  });
+        selectedAdvert: null
+      }
+    }
+  })
 
-  test("authLogout devuelve acción correcta", () => {
-    expect(authLogout()).toEqual({ type: "auth/logout" });
-  });
+  test('authLogout devuelve acción correcta', () => {
+    expect(authLogout()).toEqual({ type: 'auth/logout' })
+  })
 
-  test("authLogin dispatch pending y fulfilled al iniciar sesión correctamente", async () => {
-    const credentials: CredentialUser = { email: "test@example.com", password: "1234" };
-    const mockToken = "mock-token";
+  test('authLogin dispatch pending y fulfilled al iniciar sesión correctamente', async () => {
+    const credentials: CredentialUser = {
+      email: 'test@example.com',
+      password: '1234'
+    }
+    const mockToken = 'mock-token'
 
-    vi.spyOn(authService, "login").mockResolvedValue(mockToken);
+    vi.spyOn(authService, 'login').mockResolvedValue(mockToken)
 
-    const thunk = authLogin(credentials);
-    const result = await thunk(dispatch, () => fakeState, undefined);
+    const thunk = authLogin(credentials)
+    const result = await thunk(dispatch, () => fakeState, undefined)
 
-    expect(dispatch).toHaveBeenNthCalledWith(1, AuthLoginPending());
-    expect(dispatch).toHaveBeenNthCalledWith(2, AuthLoginFulfilled(mockToken));
-    expect(result).toBe(mockToken);
-  });
+    expect(dispatch).toHaveBeenNthCalledWith(1, AuthLoginPending())
+    expect(dispatch).toHaveBeenNthCalledWith(2, AuthLoginFulfilled(mockToken))
+    expect(result).toBe(mockToken)
+  })
 
-  test("authLogin dispatch pending y rejected al fallar login", async () => {
-    const credentials: CredentialUser = { email: "fail@example.com", password: "wrong" };
-    const error = new Error("Login failed");
+  test('authLogin dispatch pending y rejected al fallar login', async () => {
+    const credentials: CredentialUser = {
+      email: 'fail@example.com',
+      password: 'wrong'
+    }
+    const error = new Error('Login failed')
 
-    vi.spyOn(authService, "login").mockRejectedValue(error);
+    vi.spyOn(authService, 'login').mockRejectedValue(error)
 
-    const thunk = authLogin(credentials);
+    const thunk = authLogin(credentials)
 
-    await expect(thunk(dispatch, () => fakeState, undefined)).rejects.toThrow(error);
+    await expect(thunk(dispatch, () => fakeState, undefined)).rejects.toThrow(
+      error
+    )
 
-    expect(dispatch).toHaveBeenNthCalledWith(1, AuthLoginPending());
-    expect(dispatch).toHaveBeenNthCalledWith(2, AuthLoginRejected(error));
-  });
-});
+    expect(dispatch).toHaveBeenNthCalledWith(1, AuthLoginPending())
+    expect(dispatch).toHaveBeenNthCalledWith(2, AuthLoginRejected(error))
+  })
+})

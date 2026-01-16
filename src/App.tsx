@@ -1,19 +1,19 @@
-import { lazy, Suspense } from "react";
-import { Layout } from "./components/layout/layout";
-import { AdvertPage } from "./pages/adverts/advert-detail-page";
-import { NewAdvertPage } from "./pages/adverts/new-advert-page";
-import { LoginPage } from "./pages/auth/login-page";
-import { AuthRoute } from "./pages/auth/require-auth";
-import NotFoundPage from "./pages/not-found";
-import { SignUpPage } from "./pages/signup/signup-page";
-import { Routes, Route, Navigate, Outlet } from "react-router";
-import { SpinnerLoadingText } from "./components/icons/spinner";
+import { lazy, Suspense } from 'react'
+import { Layout } from './components/layout/layout'
+import { AdvertPage } from './pages/adverts/advert-detail-page'
+import { NewAdvertPage } from './pages/adverts/new-advert-page'
+import { LoginPage } from './pages/auth/login-page'
+import { AuthRoute } from './pages/auth/require-auth'
+import NotFoundPage from './pages/not-found'
+import { SignUpPage } from './pages/signup/signup-page'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { SpinnerLoadingText } from './components/icons/spinner'
 
 const AdvertsPage = lazy(() =>
-  import("./pages/adverts/adverts-page").then((res) => ({
-    default: res.AdvertsPage,
-  })),
-);
+  import('./pages/adverts/adverts-page').then((res) => ({
+    default: res.AdvertsPage
+  }))
+)
 
 function App() {
   return (
@@ -59,7 +59,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App

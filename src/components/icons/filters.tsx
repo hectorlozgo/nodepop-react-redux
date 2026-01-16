@@ -1,4 +1,4 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from 'react'
 
 export const FilterOpenIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -10,7 +10,7 @@ export const FilterOpenIcon = (props: SVGProps<SVGSVGElement>) => (
   >
     <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-.293.707L13 11.414V17a1 1 0 01-1.447.894l-4-2A1 1 0 017 15v-3.586L3.293 6.707A1 1 0 013 6V4z" />
   </svg>
-);
+)
 
 export const FilterClosedIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -28,4 +28,4 @@ export const FilterClosedIcon = (props: SVGProps<SVGSVGElement>) => (
       d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 12.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 019 17v-4.586L3.293 6.707A1 1 0 013 6V4z"
     />
   </svg>
-);
+)

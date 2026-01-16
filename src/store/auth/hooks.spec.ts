@@ -1,23 +1,23 @@
-import { renderHook, act } from "@testing-library/react";
-import { useAuth, useLoginAction, useLogoutAction } from "./hooks";
-import type { RootState } from "..";
-import { type Mock } from "vitest";
-import { useAppSelector, useAppDispatch } from "../index";
-import { authLogin, authLogout } from "./actions";
+import { renderHook, act } from '@testing-library/react'
+import { useAuth, useLoginAction, useLogoutAction } from './hooks'
+import type { RootState } from '..'
+import { type Mock } from 'vitest'
+import { useAppSelector, useAppDispatch } from '../index'
+import { authLogin, authLogout } from './actions'
 
 // mock de actions
-vi.mock("./actions", () => ({
-  authLogin: vi.fn((cred) => ({ type: "auth/login", payload: cred })),
-  authLogout: vi.fn(() => ({ type: "auth/logout" })),
-}));
+vi.mock('./actions', () => ({
+  authLogin: vi.fn((cred) => ({ type: 'auth/login', payload: cred })),
+  authLogout: vi.fn(() => ({ type: 'auth/logout' }))
+}))
 
 // mock de store
-vi.mock("../index", () => ({
+vi.mock('../index', () => ({
   useAppDispatch: vi.fn(),
-  useAppSelector: vi.fn(),
-}));
+  useAppSelector: vi.fn()
+}))
 
-describe("Auth hooks", () => {
+describe('Auth hooks', () => {
   const mockStateTrue: RootState = {
     auth: true,
     adverts: {
@@ -25,9 +25,9 @@ describe("Auth hooks", () => {
       tags: [],
       selectedAdvert: null,
       loading: false,
-      error: null,
-    },
-  };
+      error: null
+    }
+  }
 
   const mockStateFalse: RootState = {
     auth: false,
@@ -36,54 +36,54 @@ describe("Auth hooks", () => {
       tags: [],
       selectedAdvert: null,
       loading: false,
-      error: null,
-    },
-  };
+      error: null
+    }
+  }
 
   beforeEach(() => {
-    vi.clearAllMocks();
-  });
+    vi.clearAllMocks()
+  })
 
-  test("useAuth devuelve true si auth=true", () => {
-    (useAppSelector as unknown as Mock).mockImplementation(
-      (selector: (s: RootState) => unknown) => selector(mockStateTrue),
-    );
-    const { result } = renderHook(() => useAuth());
-    expect(result.current).toBe(true);
-  });
+  test('useAuth devuelve true si auth=true', () => {
+    ;(useAppSelector as unknown as Mock).mockImplementation(
+      (selector: (s: RootState) => unknown) => selector(mockStateTrue)
+    )
+    const { result } = renderHook(() => useAuth())
+    expect(result.current).toBe(true)
+  })
 
-  test("useAuth devuelve false si auth=false", () => {
-    (useAppSelector as unknown as Mock).mockImplementation(
-      (selector: (s: RootState) => unknown) => selector(mockStateFalse),
-    );
-    const { result } = renderHook(() => useAuth());
-    expect(result.current).toBe(false);
-  });
+  test('useAuth devuelve false si auth=false', () => {
+    ;(useAppSelector as unknown as Mock).mockImplementation(
+      (selector: (s: RootState) => unknown) => selector(mockStateFalse)
+    )
+    const { result } = renderHook(() => useAuth())
+    expect(result.current).toBe(false)
+  })
 
-  test("useLoginAction despacha authLogin con credenciales", async () => {
-    const dispatch = vi.fn();
-    (useAppDispatch as unknown as Mock).mockReturnValue(dispatch);
+  test('useLoginAction despacha authLogin con credenciales', async () => {
+    const dispatch = vi.fn()
+    ;(useAppDispatch as unknown as Mock).mockReturnValue(dispatch)
 
-    const { result } = renderHook(() => useLoginAction());
-    const credentials = { email: "test@test.com", password: "1234" };
+    const { result } = renderHook(() => useLoginAction())
+    const credentials = { email: 'test@test.com', password: '1234' }
 
     await act(async () => {
-      await result.current(credentials);
-    });
+      await result.current(credentials)
+    })
 
-    expect(dispatch).toHaveBeenCalledWith(authLogin(credentials));
-  });
+    expect(dispatch).toHaveBeenCalledWith(authLogin(credentials))
+  })
 
-  test("useLogoutAction despacha authLogout", () => {
-    const dispatch = vi.fn();
-    (useAppDispatch as unknown as Mock).mockReturnValue(dispatch);
+  test('useLogoutAction despacha authLogout', () => {
+    const dispatch = vi.fn()
+    ;(useAppDispatch as unknown as Mock).mockReturnValue(dispatch)
 
-    const { result } = renderHook(() => useLogoutAction());
+    const { result } = renderHook(() => useLogoutAction())
 
     act(() => {
-      result.current();
-    });
+      result.current()
+    })
 
-    expect(dispatch).toHaveBeenCalledWith(authLogout());
-  });
-});
+    expect(dispatch).toHaveBeenCalledWith(authLogout())
+  })
+})

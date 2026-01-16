@@ -3,82 +3,82 @@ import {
   UserSchema,
   AuthUserSchema,
   CredentialUserSchema,
-  JwtSchema,
-} from "./types-auth";
+  JwtSchema
+} from './types-auth'
 
-describe("Schemas validation", () => {
-  test("should validate SignUpSchema with valid data", () => {
+describe('Schemas validation', () => {
+  test('should validate SignUpSchema with valid data', () => {
     const validData = {
-      email: "test@example.com",
-      password: "password123",
-      username: "testuser",
-      name: "Test User",
-    };
-    expect(() => SignUpSchema.parse(validData)).not.toThrow();
-  });
+      email: 'test@example.com',
+      password: 'password123',
+      username: 'testuser',
+      name: 'Test User'
+    }
+    expect(() => SignUpSchema.parse(validData)).not.toThrow()
+  })
 
-  test("should fail SignUpSchema with missing fields", () => {
+  test('should fail SignUpSchema with missing fields', () => {
     const invalidData = {
-      email: "test@example.com",
-      password: "password123",
-    };
-    expect(() => SignUpSchema.parse(invalidData)).toThrow();
-  });
+      email: 'test@example.com',
+      password: 'password123'
+    }
+    expect(() => SignUpSchema.parse(invalidData)).toThrow()
+  })
 
-  test("should validate UserSchema with valid data", () => {
+  test('should validate UserSchema with valid data', () => {
     const validData = {
-      id: "1",
-      email: "user@example.com",
-      username: "user1",
-    };
-    expect(() => UserSchema.parse(validData)).not.toThrow();
-  });
+      id: '1',
+      email: 'user@example.com',
+      username: 'user1'
+    }
+    expect(() => UserSchema.parse(validData)).not.toThrow()
+  })
 
-  test("should fail UserSchema with invalid email", () => {
+  test('should fail UserSchema with invalid email', () => {
     const invalidData = {
-      id: "1",
-      email: "invalid-email",
-      username: "user1",
-    };
-    expect(() => UserSchema.parse(invalidData)).toThrow();
-  });
+      id: '1',
+      email: 'invalid-email',
+      username: 'user1'
+    }
+    expect(() => UserSchema.parse(invalidData)).toThrow()
+  })
 
-  test("should validate AuthUserSchema with valid data", () => {
+  test('should validate AuthUserSchema with valid data', () => {
     const validData = {
-      id: "1",
-      email: "auth@example.com",
-      username: "authuser",
-      createdAt: "2025-07-05T12:34:56Z",
-    };
-    expect(() => AuthUserSchema.parse(validData)).not.toThrow();
-  });
+      id: '1',
+      email: 'auth@example.com',
+      username: 'authuser',
+      createdAt: '2025-07-05T12:34:56Z'
+    }
+    expect(() => AuthUserSchema.parse(validData)).not.toThrow()
+  })
 
-  test("should validate CredentialUserSchema with optional remember", () => {
+  test('should validate CredentialUserSchema with optional remember', () => {
     const validData = {
-      email: "creds@example.com",
-      password: "pass123",
-      remember: true,
-    };
-    expect(() => CredentialUserSchema.parse(validData)).not.toThrow();
-  });
+      email: 'creds@example.com',
+      password: 'pass123',
+      remember: true
+    }
+    expect(() => CredentialUserSchema.parse(validData)).not.toThrow()
+  })
 
-  test("should fail CredentialUserSchema with invalid email", () => {
+  test('should fail CredentialUserSchema with invalid email', () => {
     const invalidData = {
-      email: "not-an-email",
-      password: "pass123",
-    };
-    expect(() => CredentialUserSchema.parse(invalidData)).toThrow();
-  });
+      email: 'not-an-email',
+      password: 'pass123'
+    }
+    expect(() => CredentialUserSchema.parse(invalidData)).toThrow()
+  })
 
-  test("should validate JwtSchema with valid token", () => {
+  test('should validate JwtSchema with valid token', () => {
     const validData = {
-      accessToken: "some.jwt.token",
-    };
-    expect(() => JwtSchema.parse(validData)).not.toThrow();
-  });
+      accessToken: 'some.jwt.token'
+    }
+    expect(() => JwtSchema.parse(validData)).not.toThrow()
+  })
 
-  test("should fail JwtSchema with missing token", () => {
-    const invalidData = {};
-    expect(() => JwtSchema.parse(invalidData)).toThrow();
-  });
-});
+  test('should fail JwtSchema with missing token', () => {
+    const invalidData = {}
+    expect(() => JwtSchema.parse(invalidData)).toThrow()
+  })
+})

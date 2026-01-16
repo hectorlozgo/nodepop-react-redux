@@ -1,33 +1,33 @@
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Component, type ErrorInfo, type ReactNode } from 'react'
 
 interface ErrorBoundaryProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   {
-    error: null | Error;
-    info: unknown;
+    error: null | Error
+    info: unknown
   }
 > {
   constructor(props: ErrorBoundaryProps) {
-    super(props);
+    super(props)
 
     this.state = {
       error: null,
-      info: null,
-    };
+      info: null
+    }
   }
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error(error, errorInfo);
-    this.setState({ error, info: errorInfo });
+    console.error(error, errorInfo)
+    this.setState({ error, info: errorInfo })
   }
   render() {
-    const { error, info } = this.state;
+    const { error, info } = this.state
 
     if (!error) {
-      return this.props.children;
+      return this.props.children
     }
 
     return (
@@ -40,6 +40,6 @@ export class ErrorBoundary extends Component<
           <code>{JSON.stringify(info)}</code>
         </div>
       </div>
-    );
+    )
   }
 }

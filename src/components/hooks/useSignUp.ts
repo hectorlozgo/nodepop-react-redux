@@ -1,91 +1,90 @@
-import { useNavigate } from "react-router-dom";
-import { createdUser } from "../../pages/signup/service";
+import { useNavigate } from 'react-router-dom'
+import { createdUser } from '../../pages/signup/service'
 import {
   useState,
   type ChangeEvent,
   type FormEvent,
-  type FocusEvent,
-} from "react";
-import { REGEXP } from "../../utils/constants";
-import { useNotifications } from "./useNotifications";
+  type FocusEvent
+} from 'react'
+import { REGEXP } from '../../utils/constants'
+import { useNotifications } from './useNotifications'
 
 export const useSignUp = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { showSuccess, showError } = useNotifications();
+  const [isLoading, setIsLoading] = useState(false)
+  const { showSuccess, showError } = useNotifications()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
 
   const handleChange = ({
-    target: { name, value },
+    target: { name, value }
   }: ChangeEvent<HTMLInputElement>) => {
     const newValue =
-      name === "username" || name === "email"
+      name === 'username' || name === 'email'
         ? value.toLowerCase().trim()
-        : value.trim();
+        : value.trim()
     setFormData((prev) => ({
       ...prev,
-      [name]: newValue,
-    }));
-  };
+      [name]: newValue
+    }))
+  }
 
   const handleBlur = ({
-    target: { name, value },
+    target: { name, value }
   }: FocusEvent<HTMLInputElement>) => {
-    if (name === "email") {
+    if (name === 'email') {
       if (!REGEXP.email.test(value)) {
-        showError("El email no es válido.");
+        showError('El email no es válido.')
       } else {
-        showError("");
+        showError('')
       }
-    } else if (name === "username") {
+    } else if (name === 'username') {
       if (!REGEXP.username.test(value)) {
-        showError("El nombre de usuario no es válido.");
+        showError('El nombre de usuario no es válido.')
       } else {
-        showError("");
+        showError('')
       }
     }
-  };
+  }
 
   const isFormValid =
-    formData.name !== "" &&
+    formData.name !== '' &&
     REGEXP.email.test(formData.email) &&
     REGEXP.username.test(formData.username) &&
-    formData.password !== "";
+    formData.password !== ''
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
     if (formData.password !== formData.confirmPassword) {
-      showError("Las contraseñas no coinciden.");
-      return;
+      showError('Las contraseñas no coinciden.')
+      return
     }
-    
+
     if (!formData.name || !formData.username || !formData.email) {
-      showError("Por favor rellene todos los campos.");
-      return;
+      showError('Por favor rellene todos los campos.')
+      return
     }
     setIsLoading(true)
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { confirmPassword, ...dataSend } = formData;
-      await createdUser(dataSend);
-      showSuccess("Usuario creado con éxito");
-      navigate(`/adverts`, { replace: true });
+      const { confirmPassword, ...dataSend } = formData
+      await createdUser(dataSend)
+      showSuccess('Usuario creado con éxito')
+      navigate(`/adverts`, { replace: true })
     } catch (error: unknown) {
-      const errorMsg = error instanceof Error 
-      ? error.message
-      : "Error al crear el usuario."
-      showError(errorMsg);
+      const errorMsg =
+        error instanceof Error ? error.message : 'Error al crear el usuario.'
+      showError(errorMsg)
     } finally {
       setIsLoading(false)
     }
-  };
+  }
   return {
     isLoading,
     formData,
@@ -95,6 +94,6 @@ export const useSignUp = () => {
     handleBlur,
     setIsLoading,
     showSuccess,
-    showError,
-  };
-};
+    showError
+  }
+}
