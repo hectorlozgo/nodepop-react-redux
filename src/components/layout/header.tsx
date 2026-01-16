@@ -1,39 +1,22 @@
-import { useState } from 'react'
-import {
-  NavLink,
-  useNavigate,
-  useLocation,
-  type NavLinkProps
-} from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store'
+import { NavLink, useLocation, type NavLinkProps } from 'react-router-dom'
+import { useAppSelector } from '../../store'
 import { Button } from '../ui/button'
-import { logout } from '../../pages/auth/service'
-import { authLogout } from '../../store/auth/actions'
+import { useLogout } from '../hooks/useLogout'
 
 export const Header = () => {
-  const isLogged = useAppSelector((state) => state.auth)
-  const dispatch = useAppDispatch()
-
-  const navigate = useNavigate()
   const location = useLocation()
-  const [loadingLogout, setLoadingLogout] = useState(false)
-  const [logoutConfirm, setLogoutConfirm] = useState(false)
+  const isLogged = useAppSelector((state) => state.auth)
+  const {
+    loadingLogout,
+    logoutConfirm,
+    navigate,
+    setLogoutConfirm,
+    handleLogoutClick
+  } = useLogout()
 
   const handleLoginClick = () => {
     if (location.pathname !== '/login') {
       navigate('/login')
-    }
-  }
-
-  const handleLogoutClick = async () => {
-    try {
-      setLoadingLogout(true)
-      await logout()
-      dispatch(authLogout())
-      navigate('/')
-    } finally {
-      setLoadingLogout(false)
-      setLogoutConfirm(false)
     }
   }
 
