@@ -6,10 +6,11 @@ import {
   AuthLoginRejected
 } from './actions'
 import type { CredentialUser } from '../../pages/auth/types-auth'
-import type { RootState } from '..'
+import type { RootState, RootAction } from '..'
+import type { ThunkDispatch } from 'redux-thunk'
 import * as authService from '../../pages/auth/service'
 
-let dispatch: ReturnType<typeof vi.fn>
+let dispatch: ThunkDispatch<RootState, undefined, RootAction>
 let fakeState: RootState
 
 describe('Auth actions', () => {
