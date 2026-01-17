@@ -11,8 +11,9 @@ export const Header = () => {
     loadingLogout,
     logoutConfirm,
     navigate,
-    setLogoutConfirm,
-    handleLogoutClick
+    handleLogoutClick,
+    handleLogoutConfirm,
+    handleLogoutCancel
   } = useLogout()
 
   const isLoginPath = location.pathname === '/login'
@@ -26,7 +27,7 @@ export const Header = () => {
         isLogged={isLogged}
         isLoginPath={isLoginPath}
         isLoading={loadingLogout}
-        onLogoutClick={() => setLogoutConfirm(true)}
+        onLogoutClick={handleLogoutConfirm}
         onLoginClick={handleLoginNavigate}
       />
 
@@ -35,7 +36,7 @@ export const Header = () => {
           title="¿Estás seguro que deseas cerrar sesión?"
           isOpen={logoutConfirm}
           isLoading={loadingLogout}
-          onClose={() => setLogoutConfirm(false)}
+          onClose={handleLogoutCancel}
           onConfirm={handleLogoutClick}
         />
       )}

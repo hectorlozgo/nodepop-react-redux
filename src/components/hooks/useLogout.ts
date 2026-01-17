@@ -18,15 +18,20 @@ export const useLogout = () => {
       navigate('/')
     } finally {
       setLoadingLogout(false)
-      setLogoutConfirm(false)
+      handleLogoutCancel()
     }
   }
+
+  const handleLogoutConfirm = () => setLogoutConfirm(true)
+  const handleLogoutCancel = () => setLogoutConfirm(false)
+
   return {
     loadingLogout,
     logoutConfirm,
     navigate,
     setLoadingLogout,
-    setLogoutConfirm,
-    handleLogoutClick
+    handleLogoutClick,
+    handleLogoutConfirm,
+    handleLogoutCancel
   }
 }
