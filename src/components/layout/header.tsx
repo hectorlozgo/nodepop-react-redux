@@ -3,10 +3,11 @@ import { useLogout } from '../hooks/useLogout'
 import { DialogConfirm } from '../ui/modal-confirm'
 import { useAppSelector } from '../../store'
 import { Navbar } from './navbar'
+import { getIsLogged } from '../../store/auth/selectors'
 
 export const Header = () => {
   const location = useLocation()
-  const isLogged = useAppSelector((state) => state.auth)
+  const isLogged = useAppSelector(getIsLogged)
   const {
     loadingLogout,
     logoutConfirm,
