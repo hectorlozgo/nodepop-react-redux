@@ -1,11 +1,14 @@
+const BASE_USER_URL = '/api'
+const BASE_ADVERT_URL = '/api/v1/adverts'
+
 export const USER_ENDPOINTS = {
-  SIGNUP: '/api/auth/signup',
-  LOGIN: '/api/auth/login',
-  AUTH: '/api/auth/me'
+  SIGNUP: `${BASE_USER_URL}/auth/signup`,
+  LOGIN: `${BASE_USER_URL}/auth/login`,
+  AUTH: `${BASE_USER_URL}/auth/me`
 }
 
 export const ADVERT_ENDPOINT = {
-  TAGS: '/api/v1/adverts/tags',
-  ADVERT: '/api/v1/adverts',
-  ADVERT_ID: (id: string) => `/api/v1/adverts/${id}`
+  TAGS: `${BASE_ADVERT_URL}/tags`,
+  ADVERT: `${BASE_ADVERT_URL}`,
+  ADVERT_ID: (id: string) => `${BASE_ADVERT_URL}/${id}`
 }

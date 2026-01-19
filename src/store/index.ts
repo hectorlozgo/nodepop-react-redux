@@ -1,13 +1,13 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
-import { composeWithDevTools } from '@redux-devtools/extension'
-import { auth } from './auth/reducer'
-import { adverts } from './adverts/reducer'
 import {
   useDispatch,
   useSelector,
   type TypedUseSelectorHook
 } from 'react-redux'
 import * as thunk from 'redux-thunk'
+import { composeWithDevTools } from '@redux-devtools/extension'
+import { auth } from './auth/reducer'
+import { adverts } from './adverts/reducer'
 import type { AuthActions } from './auth/actions'
 import type { AdvertActions } from './adverts/actions'
 

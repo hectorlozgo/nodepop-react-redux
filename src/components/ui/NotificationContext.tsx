@@ -1,4 +1,3 @@
-// NotificationsContext.tsx
 import { createContext, type ReactNode } from 'react'
 import { useMessages } from '../hooks/useMessage'
 import { Notifications } from './notification'

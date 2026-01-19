@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { AxiosError } from 'axios'
 import { Page } from '../../components/layout/page'
 import { Button } from '../../components/ui/button'
 import { SpinnerLoadingText } from '../../components/icons/spinner'
-import { AxiosError } from 'axios'
 import { useNotifications } from '../../components/hooks/useNotifications'
 import {
   useAdvertsActions,

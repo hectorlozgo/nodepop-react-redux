@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom'
-import { createdUser } from '../../pages/signup/service'
 import {
   useState,
   type ChangeEvent,
   type FormEvent,
   type FocusEvent
 } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { createdUser } from '../../pages/signup/service'
 import { REGEXP } from '../../utils/constants'
 import { useNotifications } from './useNotifications'
 
